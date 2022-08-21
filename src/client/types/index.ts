@@ -71,6 +71,7 @@ export interface SettingsState {
   sidebarVisible: boolean
   notesSortKey: NotesSortKey
   codeMirrorOptions: { [key: string]: any }
+  italicsInMarkdown: boolean
 }
 
 export interface SyncState {

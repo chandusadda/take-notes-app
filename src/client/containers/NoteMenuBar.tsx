@@ -12,6 +12,7 @@ import {
   Sun,
   Moon,
   Clipboard as ClipboardCmp,
+  Italic,
 } from 'react-feather'
 
 import { TestID } from '@resources/TestID'
@@ -22,6 +23,7 @@ import {
   togglePreviewMarkdown,
   toggleDarkTheme,
   updateCodeMirrorOption,
+  convertItalicsInMarkdown,
 } from '@/slices/settings'
 import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
@@ -83,6 +85,14 @@ export const NoteMenuBar = () => {
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
+    
+  /**
+   * _convertItalicsMarkdown will alter current state of italicsInMarkdown in SettingsState by dispatching
+   * convertItalicsInMarkdown action
+   * @value is to send current state of the italicsInMarkdown
+   * (its value is taken as string since need not to alter existing behaviour)
+   */
+  const _convertItalicsMarkdown = (value: string) => dispatch(convertItalicsInMarkdown(value))
 
   // ===========================================================================
   // Handlers
@@ -100,6 +110,15 @@ export const NoteMenuBar = () => {
   const togglePreviewHandler = () => {
     togglePreviewIcon(!isToggled)
     _togglePreviewMarkdown()
+  }
+
+  /**
+   * convertItalicHandler will trigger new state of italicsInMarkdown to change italics to normal font
+   * by calling _convertItalicsMarkdown method
+   * (its value is taken as string since need not to alter existing behaviour)
+   */
+  const convertItalicHandler = (): void => {
+    _convertItalicsMarkdown('true')
   }
 
   return (
@@ -145,6 +164,10 @@ export const NoteMenuBar = () => {
             {copyNoteIcon}
             {uuidCopiedText && <span className="uuid-copied-text">{uuidCopiedText}</span>}
             <span className="sr-only">Copy note</span>
+          </button>
+          <button className="note-menu-bar-button">
+            <Italic aria-hidden="true" size={18} onClick={convertItalicHandler} />
+            <span className="sr-only">Don’t Panic</span>
           </button>
         </nav>
       ) : (

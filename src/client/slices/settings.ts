@@ -22,6 +22,7 @@ export const initialState: SettingsState = {
   },
   isOpen: false,
   loading: false,
+  italicsInMarkdown: false,
 }
 
 const settingsSlice = createSlice({
@@ -59,6 +60,16 @@ const settingsSlice = createSlice({
     loadSettingsSuccess: (state, { payload }: PayloadAction<SettingsState>) => {
       return { ...payload, loading: false }
     },
+
+    /**
+     * convertItalicsInMarkdown will alter current state of italicsInMarkdown in SettingsState
+     * @state state of the SettingsState
+     * @payload is to get current state of the italicsInMarkdown
+     * (its value is taken as string since need not to alter existing behaviour)
+     */
+    convertItalicsInMarkdown: (state: SettingsState, { payload }: { payload: string }):void => {
+      state.italicsInMarkdown = payload === 'true' ? true : false
+    },
   },
 })
 
@@ -71,6 +82,7 @@ export const {
   loadSettings,
   loadSettingsError,
   loadSettingsSuccess,
+  convertItalicsInMarkdown,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

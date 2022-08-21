@@ -1,12 +1,12 @@
 import dayjs from 'dayjs'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
 import { Editor } from 'codemirror'
 
 import { getActiveNote } from '@/utils/helpers'
 import { updateNote } from '@/slices/note'
-import { NoteItem } from '@/types'
+import { NoteItem, RootState, SettingsState } from '@/types'
 import { NoteMenuBar } from '@/containers/NoteMenuBar'
 import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
@@ -18,6 +18,7 @@ import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/addon/scroll/scrollpastend'
+import { convertItalicsInMarkdown } from '@/slices/settings'
 
 export const NoteEditor: React.FC = () => {
   // ===========================================================================
@@ -26,9 +27,28 @@ export const NoteEditor: React.FC = () => {
 
   const { pendingSync } = useSelector(getSync)
   const { activeNoteId, loading, notes } = useSelector(getNotes)
-  const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
+  const { codeMirrorOptions, previewMarkdown, italicsInMarkdown } = useSelector<RootState, SettingsState>(getSettings)
+  const [activeNote, setActiveNote] = useState<NoteItem | undefined>(undefined)
 
-  const activeNote = getActiveNote(notes, activeNoteId)
+  useEffect(()=> {
+    let actNote = getActiveNote(notes, activeNoteId)
+    setActiveNote(actNote)
+  },[notes, activeNoteId])
+
+  useEffect(()=> {
+    if(italicsInMarkdown && activeNote?.text && activeNote?.text.length > 0) {
+      let newActNotes = {...activeNote}
+      const notesWithoutItalics: string = newActNotes?.text.replace(/\*((\S+\s?)\w+(?!\*\*))\*/g, `$1`)
+      const notesWithoutBoldNItalics: string = notesWithoutItalics.replace(/[\*][\*][\*]((\S+\s?)\w+(?=\*\*))[\*][\*][\*]/g, `$1`)
+      // const notesWithoutItalics1: string = newActNotes?.text.replace(/[_][*][*]+(\S+\s?)\w+[_][*][*]/g, `$1`)
+      newActNotes.text = notesWithoutBoldNItalics
+      setActiveNote(newActNotes)
+      dispatch(convertItalicsInMarkdown("false"))
+    }
+    return () => {
+      dispatch(convertItalicsInMarkdown("false"))
+    }
+  }, [italicsInMarkdown, notes])
 
   // ===========================================================================
   // Dispatch

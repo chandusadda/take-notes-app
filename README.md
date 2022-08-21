@@ -268,6 +268,7 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://www.linkedin.com/in/mookkiah/"><img src="https://avatars.githubusercontent.com/u/8975264?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Mahendran Mookkiah</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=mookkiah" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/hkhattabii"><img src="https://avatars.githubusercontent.com/u/54418529?v=4?s=50" width="50px;" alt=""/><br /><sub><b>hkhattabii</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=hkhattabii" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Federico-Pomponii"><img src="https://avatars.githubusercontent.com/u/6978411?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Federico Pomponii</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Federico-Pomponii" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/chandusadda"><img src="https://avatars.githubusercontent.com/u/63540570?v=4" width="50px;" alt=""/><br /><sub><b>Chandu Sadda</b></sub></a><br /><a href="https://github.com/chandusadda/take-notes-app/commits/main" title="Code">💻</a></td>
   </tr>
 </table>
 
